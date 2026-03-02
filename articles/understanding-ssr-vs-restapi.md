@@ -3,7 +3,7 @@ title: "【C4モデル図解】SSRとRESTAPIの構造的違い"
 emoji: "🔥"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [structurizr, plantuml, spring, ssr, restapi]
-published: false
+published: true
 ---
 
 ## はじめに
