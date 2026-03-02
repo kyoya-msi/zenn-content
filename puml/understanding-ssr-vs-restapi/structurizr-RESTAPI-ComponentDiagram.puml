@@ -1,0 +1,37 @@
+@startuml
+title <size:24>Component View: REST APIシステム - バックエンドAPI</size>\n<size:24>REST内部:@RestControllerがJSONデータを返す</size>
+
+set separator none
+left to right direction
+
+<style>
+  root {
+    BackgroundColor: #ffffff
+    FontColor: #444444
+  }
+</style>
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+!include <C4/C4_Component>
+
+System_Boundary("RESTAPIシステム_boundary", "REST APIシステム", $tags="") {
+  Container_Boundary("RESTAPIシステム.バックエンドAPI_boundary", "バックエンドAPI", $tags="") {
+    Component(RESTAPIシステム.バックエンドAPI.RestController, "RestController", $techn="Spring: @RestController", $descr="HTTPリクエストを受付+JSONデータを返却する", $tags="", $link="")
+    Component(RESTAPIシステム.バックエンドAPI.Service, "Service", $techn="Spring: @Service", $descr="ビジネスロジックを実行する", $tags="", $link="")
+    Component(RESTAPIシステム.バックエンドAPI.Repository, "Repository", $techn="Spring: @Repository", $descr="データベースと通信する", $tags="", $link="")
+  }
+
+  Container(RESTAPIシステム.フロントエンド, "フロントエンド", $techn="Reactなど", $descr="画面描画+ユーザー操作受付", $tags="", $link="")
+  Container(RESTAPIシステム.データベース, "データベース", $techn="RDBMS", $descr="データを保存", $tags="", $link="")
+}
+
+Rel(RESTAPIシステム.フロントエンド, RESTAPIシステム.バックエンドAPI.RestController, "API呼び出し", $techn="HTTP/JSON", $tags="", $link="")
+Rel(RESTAPIシステム.バックエンドAPI.RestController, RESTAPIシステム.バックエンドAPI.Service, "処理を移譲", $techn="", $tags="", $link="")
+Rel(RESTAPIシステム.バックエンドAPI.Service, RESTAPIシステム.バックエンドAPI.Repository, "データ操作を依頼", $techn="", $tags="", $link="")
+Rel(RESTAPIシステム.バックエンドAPI.Repository, RESTAPIシステム.データベース, "JDBC/SQL", $techn="", $tags="", $link="")
+
+SHOW_LEGEND(true)
+hide stereotypes
+@enduml

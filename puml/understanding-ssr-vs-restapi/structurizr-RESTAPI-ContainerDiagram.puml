@@ -1,0 +1,32 @@
+@startuml
+title <size:24>Container View: REST APIシステム</size>\n<size:24>RESTAPI:フロントエンドとバックエンドが分離</size>
+
+set separator none
+left to right direction
+
+<style>
+  root {
+    BackgroundColor: #ffffff
+    FontColor: #444444
+  }
+</style>
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+
+Person(ユーザー, "ユーザー", $descr="ブラウザからアクセス", $tags="", $link="")
+
+System_Boundary("RESTAPIシステム_boundary", "REST APIシステム", $tags="") {
+  Container(RESTAPIシステム.フロントエンド, "フロントエンド", $techn="Reactなど", $descr="画面描画+ユーザー操作受付", $tags="", $link="")
+  Container(RESTAPIシステム.バックエンドAPI, "バックエンドAPI", $techn="SpringBoot: REST", $descr="JSONデータの提供+ビジネスロジック実行", $tags="", $link="")
+  Container(RESTAPIシステム.データベース, "データベース", $techn="RDBMS", $descr="データを保存", $tags="", $link="")
+}
+
+Rel(ユーザー, RESTAPIシステム.フロントエンド, "画面操作", $techn="", $tags="", $link="")
+Rel(RESTAPIシステム.フロントエンド, RESTAPIシステム.バックエンドAPI, "API呼び出し", $techn="HTTP/JSON", $tags="", $link="")
+Rel(RESTAPIシステム.バックエンドAPI, RESTAPIシステム.データベース, "JDBC/SQL", $techn="", $tags="", $link="")
+
+SHOW_LEGEND(true)
+hide stereotypes
+@enduml

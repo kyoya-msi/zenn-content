@@ -1,0 +1,38 @@
+@startuml
+title <size:24>Component View: MVCシステム - WEBアプリケーション</size>\n<size:24>SSR内部:@ControllerがView名を返す</size>
+
+set separator none
+left to right direction
+
+<style>
+  root {
+    BackgroundColor: #ffffff
+    FontColor: #444444
+  }
+</style>
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+!include <C4/C4_Component>
+
+Person(ユーザー, "ユーザー", $descr="ブラウザからアクセス", $tags="", $link="")
+
+System_Boundary("MVCシステム_boundary", "MVCシステム", $tags="") {
+  Container_Boundary("MVCシステム.WEBアプリケーション_boundary", "WEBアプリケーション", $tags="") {
+    Component(MVCシステム.WEBアプリケーション.MVCController, "MVC Controller", $techn="Spring: @Controller", $descr="HTTPリクエストを受付+View名を返却", $tags="", $link="")
+    Component(MVCシステム.WEBアプリケーション.Service, "Service", $techn="Spring: @Service", $descr="ビジネスロジックを実行する", $tags="", $link="")
+    Component(MVCシステム.WEBアプリケーション.Repository, "Repository", $techn="Spring: @Repository", $descr="データベースと通信する", $tags="", $link="")
+  }
+
+  Container(MVCシステム.データベース, "データベース", $techn="RDBMS", $descr="データを保存", $tags="", $link="")
+}
+
+Rel(MVCシステム.WEBアプリケーション.MVCController, MVCシステム.WEBアプリケーション.Service, "処理を移譲", $techn="", $tags="", $link="")
+Rel(MVCシステム.WEBアプリケーション.Service, MVCシステム.WEBアプリケーション.Repository, "データ操作を依頼", $techn="", $tags="", $link="")
+Rel(MVCシステム.WEBアプリケーション.Repository, MVCシステム.データベース, "JDBC/SQL", $techn="", $tags="", $link="")
+Rel(ユーザー, MVCシステム.WEBアプリケーション.MVCController, "画面操作/HTTPリクエスト", $techn="HTTP/HTML", $tags="", $link="")
+
+SHOW_LEGEND(true)
+hide stereotypes
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+title <size:24>Container View: MVCシステム</size>\n<size:24>SSR:画面とバックエンドが一体化</size>
+
+set separator none
+left to right direction
+
+<style>
+  root {
+    BackgroundColor: #ffffff
+    FontColor: #444444
+  }
+</style>
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+
+Person(ユーザー, "ユーザー", $descr="ブラウザからアクセス", $tags="", $link="")
+
+System_Boundary("MVCシステム_boundary", "MVCシステム", $tags="") {
+  Container(MVCシステム.WEBアプリケーション, "WEBアプリケーション", $techn="SpringBoot: MVC/JDBC", $descr="HTML生成+ビジネスロジック実行", $tags="", $link="")
+  Container(MVCシステム.データベース, "データベース", $techn="RDBMS", $descr="データを保存", $tags="", $link="")
+}
+
+Rel(MVCシステム.WEBアプリケーション, MVCシステム.データベース, "JDBC/SQL", $techn="", $tags="", $link="")
+Rel(ユーザー, MVCシステム.WEBアプリケーション, "画面操作/HTTPリクエスト", $techn="HTTP/HTML", $tags="", $link="")
+
+SHOW_LEGEND(true)
+hide stereotypes
+@enduml
