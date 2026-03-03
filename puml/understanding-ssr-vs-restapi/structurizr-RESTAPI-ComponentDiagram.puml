@@ -1,5 +1,5 @@
 @startuml
-title <size:24>Component View: REST APIシステム - バックエンドAPI</size>\n<size:24>REST内部:@RestControllerがJSONデータを返す</size>
+title <size:24>Component View: WEBシステム(分離構成) - バックエンド</size>\n<size:24>REST内部:@RestControllerがJSONデータを提供する</size>
 
 set separator none
 left to right direction
@@ -16,21 +16,21 @@ left to right direction
 !include <C4/C4_Container>
 !include <C4/C4_Component>
 
-System_Boundary("RESTAPIシステム_boundary", "REST APIシステム", $tags="") {
-  Container_Boundary("RESTAPIシステム.バックエンドAPI_boundary", "バックエンドAPI", $tags="") {
-    Component(RESTAPIシステム.バックエンドAPI.RestController, "RestController", $techn="Spring: @RestController", $descr="HTTPリクエストを受付+JSONデータを返却する", $tags="", $link="")
-    Component(RESTAPIシステム.バックエンドAPI.Service, "Service", $techn="Spring: @Service", $descr="ビジネスロジックを実行する", $tags="", $link="")
-    Component(RESTAPIシステム.バックエンドAPI.Repository, "Repository", $techn="Spring: @Repository", $descr="データベースと通信する", $tags="", $link="")
+System_Boundary("WEBシステム分離構成_boundary", "WEBシステム(分離構成)", $tags="") {
+  Container_Boundary("WEBシステム分離構成.バックエンド_boundary", "バックエンド", $tags="") {
+    Component(WEBシステム分離構成.バックエンド.RestController, "RestController", $techn="Spring: @RestController", $descr="HTTPリクエスト受付とJSONデータ返却", $tags="", $link="")
+    Component(WEBシステム分離構成.バックエンド.Service, "Service", $techn="Spring: @Service", $descr="ビジネスロジックの実行とDTO返却", $tags="", $link="")
+    Component(WEBシステム分離構成.バックエンド.Repository, "Repository", $techn="Spring: @Repository", $descr="SQLの実行とEntity返却", $tags="", $link="")
   }
 
-  Container(RESTAPIシステム.フロントエンド, "フロントエンド", $techn="Reactなど", $descr="画面描画+ユーザー操作受付", $tags="", $link="")
-  Container(RESTAPIシステム.データベース, "データベース", $techn="RDBMS", $descr="データを保存", $tags="", $link="")
+  Container(WEBシステム分離構成.フロントエンド, "フロントエンド", $techn="Reactなど", $descr="ユーザー操作の制御と画面の構築", $tags="", $link="")
+  Container(WEBシステム分離構成.データベース, "データベース", $techn="RDBMS", $descr="データの永続化", $tags="", $link="")
 }
 
-Rel(RESTAPIシステム.フロントエンド, RESTAPIシステム.バックエンドAPI.RestController, "API呼び出し", $techn="HTTP/JSON", $tags="", $link="")
-Rel(RESTAPIシステム.バックエンドAPI.RestController, RESTAPIシステム.バックエンドAPI.Service, "処理を移譲", $techn="", $tags="", $link="")
-Rel(RESTAPIシステム.バックエンドAPI.Service, RESTAPIシステム.バックエンドAPI.Repository, "データ操作を依頼", $techn="", $tags="", $link="")
-Rel(RESTAPIシステム.バックエンドAPI.Repository, RESTAPIシステム.データベース, "JDBC/SQL", $techn="", $tags="", $link="")
+Rel(WEBシステム分離構成.フロントエンド, WEBシステム分離構成.バックエンド.RestController, "API呼び出し", $techn="HTTP/JSON", $tags="", $link="")
+Rel(WEBシステム分離構成.バックエンド.RestController, WEBシステム分離構成.バックエンド.Service, "処理を移譲", $techn="", $tags="", $link="")
+Rel(WEBシステム分離構成.バックエンド.Service, WEBシステム分離構成.バックエンド.Repository, "データベース操作を依頼", $techn="", $tags="", $link="")
+Rel(WEBシステム分離構成.バックエンド.Repository, WEBシステム分離構成.データベース, "JDBC/SQL", $techn="", $tags="", $link="")
 
 SHOW_LEGEND(true)
 hide stereotypes
