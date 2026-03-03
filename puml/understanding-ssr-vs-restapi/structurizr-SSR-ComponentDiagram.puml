@@ -1,5 +1,5 @@
 @startuml
-title <size:24>Component View: MVCシステム - WEBアプリケーション</size>\n<size:24>SSR内部:@ControllerがView名を返す</size>
+title <size:24>Component View: WEBシステム(SSR構成) - WEBアプリケーション</size>\n<size:24>SSR内部:@ControllerがView名を提供する</size>
 
 set separator none
 left to right direction
@@ -16,22 +16,22 @@ left to right direction
 !include <C4/C4_Container>
 !include <C4/C4_Component>
 
-Person(ユーザー, "ユーザー", $descr="ブラウザからアクセス", $tags="", $link="")
+Person(ユーザー, "ユーザー", $descr="ブラウザを通じてシステムを利用", $tags="", $link="")
 
-System_Boundary("MVCシステム_boundary", "MVCシステム", $tags="") {
-  Container_Boundary("MVCシステム.WEBアプリケーション_boundary", "WEBアプリケーション", $tags="") {
-    Component(MVCシステム.WEBアプリケーション.MVCController, "MVC Controller", $techn="Spring: @Controller", $descr="HTTPリクエストを受付+View名を返却", $tags="", $link="")
-    Component(MVCシステム.WEBアプリケーション.Service, "Service", $techn="Spring: @Service", $descr="ビジネスロジックを実行する", $tags="", $link="")
-    Component(MVCシステム.WEBアプリケーション.Repository, "Repository", $techn="Spring: @Repository", $descr="データベースと通信する", $tags="", $link="")
+System_Boundary("WEBシステムSSR構成_boundary", "WEBシステム(SSR構成)", $tags="") {
+  Container_Boundary("WEBシステムSSR構成.WEBアプリケーション_boundary", "WEBアプリケーション", $tags="") {
+    Component(WEBシステムSSR構成.WEBアプリケーション.MVCController, "MVCController", $techn="Spring: @Controller", $descr="HTTPリクエスト受付とView名返却", $tags="", $link="")
+    Component(WEBシステムSSR構成.WEBアプリケーション.Service, "Service", $techn="Spring: @Service", $descr="ビジネスロジックの実行とDTO返却", $tags="", $link="")
+    Component(WEBシステムSSR構成.WEBアプリケーション.Repository, "Repository", $techn="Spring: @Repository", $descr="SQLの実行とEntity返却", $tags="", $link="")
   }
 
-  Container(MVCシステム.データベース, "データベース", $techn="RDBMS", $descr="データを保存", $tags="", $link="")
+  Container(WEBシステムSSR構成.データベース, "データベース", $techn="RDBMS", $descr="データの永続化", $tags="", $link="")
 }
 
-Rel(MVCシステム.WEBアプリケーション.MVCController, MVCシステム.WEBアプリケーション.Service, "処理を移譲", $techn="", $tags="", $link="")
-Rel(MVCシステム.WEBアプリケーション.Service, MVCシステム.WEBアプリケーション.Repository, "データ操作を依頼", $techn="", $tags="", $link="")
-Rel(MVCシステム.WEBアプリケーション.Repository, MVCシステム.データベース, "JDBC/SQL", $techn="", $tags="", $link="")
-Rel(ユーザー, MVCシステム.WEBアプリケーション.MVCController, "画面操作/HTTPリクエスト", $techn="HTTP/HTML", $tags="", $link="")
+Rel(WEBシステムSSR構成.WEBアプリケーション.MVCController, WEBシステムSSR構成.WEBアプリケーション.Service, "処理を移譲", $techn="", $tags="", $link="")
+Rel(WEBシステムSSR構成.WEBアプリケーション.Service, WEBシステムSSR構成.WEBアプリケーション.Repository, "データベース操作を依頼", $techn="", $tags="", $link="")
+Rel(WEBシステムSSR構成.WEBアプリケーション.Repository, WEBシステムSSR構成.データベース, "JDBC/SQL", $techn="", $tags="", $link="")
+Rel(ユーザー, WEBシステムSSR構成.WEBアプリケーション.MVCController, "画面操作/HTTPリクエスト", $techn="HTTP/HTML", $tags="", $link="")
 
 SHOW_LEGEND(true)
 hide stereotypes
