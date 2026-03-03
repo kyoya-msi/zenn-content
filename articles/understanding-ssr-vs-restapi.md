@@ -23,14 +23,14 @@ published: true
 ![](/images/understanding-ssr-vs-restapi/structurizr-SSR-ContainerDiagram.png)
 
 これまでは、SpringBootという1つの大きなハコの中で「画面描画処理（HTML生成）」と「データ処理（ビジネスロジック）」の両方を担っていました。
-ブラウザからのリクエストに対して、サーバーが**完成した画面（HTML）**を返却する構造です。
+ブラウザからのリクエストに対して、サーバーが完成した画面(HTML)を返却する構造です。
 
 ### RESTAPI（今回の構成）
 
 ![](/images/understanding-ssr-vs-restapi/structurizr-RESTAPI-ContainerDiagram.png)
 
 一方REST APIでは、システムが「フロントエンド（Reactなど）」と「バックエンド（SpringBoot）」の2つのハコに完全に分離しています。
-バックエンドは画面を作らず、フロントエンドからの要求に対して**純粋なデータ（JSONなどなど）**だけを返す、データ提供のプロフェッショナルに徹しています。
+バックエンドは画面を作らず、フロントエンドからの要求に対して純粋なデータ(JSONなどなど)だけを返す、データ提供のプロフェッショナルに徹しています。
 
 ## 2. Component図（Spring Boot内部の違い）
 次に、粒度を上げて「レベル3：コンポーネント図」でSpringBootの内部コンポーネントの役割がどう変わったかを見てみます。
