@@ -1,0 +1,81 @@
+@startuml
+' ----------------------------
+'       レイアウト定義        
+' ----------------------------
+skinparam TitleFontSize 24
+skinparam TitleFontStyle bold
+skinparam ParticipantPadding 40
+skinparam BoxPadding 30
+skinparam shadowing true
+skinparam sequenceArrowThickness 1.5
+
+' ----------------------------
+'           タイトル           
+' ----------------------------
+title "RESTAPI (分離構成) フロー図"
+
+' ----------------------------
+'       ライフライン定義       
+' ----------------------------
+actor "ユーザー" as user
+
+box "クライアント (ブラウザ内)" #f1f8e9
+    participant "ブラウザ" as Browser
+    participant "フロントエンド\n(Reactなど)" as front #LightGreen
+end box
+
+box "<<Container>>\nバックエンドAPI" #fff3e0
+    participant "RestController\n(@RestController)" as Controller #Orange
+    participant "Service\n(@Service)" as Service
+    participant "Repository\n(@Repository)" as Repository
+end box
+
+box "<<Container>>\nデータベース" #f8f9fa
+    database "データベース" as DB
+end box
+
+' ----------------------------
+'        シーケンス定義        
+' ----------------------------
+
+user -> Browser : 画面操作
+
+Browser -> front : イベント検知
+activate front
+
+front -> Controller : **API呼び出し(HTTP/JSON)**
+activate Controller
+
+Controller -> Service : 処理を移譲(DTO提供)
+activate Service
+
+Service -> Service : ビジネスロジックを実行
+
+Service -> Repository : データベース操作を依頼
+activate Repository
+
+Repository -> DB : SQL実行
+
+DB --> Repository : 結果返却(Entity)
+
+Repository --> Service : Entityを返却
+deactivate Repository
+
+Service --> Controller : ビジネスロジック実行結果を返却(DTO)
+deactivate Service
+
+Controller -[#Red]> front : <font color=red><b>HTTPレスポンス(JSONデータ)</b></font>
+deactivate Controller
+
+note over front #ffdddd
+**<REST側最大の特徴>**
+サーバーは「データ(JSON)」を返すだけで、
+HTMLの組み立て(描画)はフロントエンド側が担当する
+end note
+
+front -[#Red]-> Browser : <font color=red><b>DOM更新(画面の一部を書き換え)</b></font>
+deactivate front
+
+Browser --> user : 画面表示
+
+@enduml
