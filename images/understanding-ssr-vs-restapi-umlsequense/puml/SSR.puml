@@ -1,0 +1,74 @@
+@startuml
+' ----------------------------
+'       レイアウト定義        
+' ----------------------------
+skinparam TitleFontSize 24
+skinparam TitleFontStyle bold
+skinparam ParticipantPadding 40
+skinparam BoxPadding 30
+skinparam shadowing true
+skinparam sequenceArrowThickness 1.5
+
+' ----------------------------
+'          タイトル           
+' ----------------------------
+title "SSR (Server Side Rendering) フロー図"
+
+' ----------------------------
+'       ライフライン定義       
+' ----------------------------
+actor "ユーザー" as user
+box "クライアント (ブラウザ内)" #f1f8e9
+	participant "ブラウザ" as Browser
+end box
+
+box "<<Container>>\nWEBアプリケーション" #e3f2fd
+	participant "Controller\n(@Controller)" as Controller #Orange
+	participant "Service\n(@Service)" as Service
+	participant "Repository\n(@Repository)" as Repository
+end box
+
+box "<<Container>>\nデータベース" #f8f9fa
+	database "データベース" as DB
+end box
+
+' ----------------------------
+'        シーケンス定義        
+' ----------------------------
+
+user -> Browser : 画面操作
+
+Browser -> Controller : HTTPリクエスト(GET/POST)
+activate Controller
+
+Controller -> Service : 処理を移譲(DTO提供)
+activate Service
+
+Service -> Service : ビジネスロジックを実行
+
+Service -> Repository : データベース操作を依頼
+activate Repository
+
+Repository -> DB : SQL実行
+
+DB --> Repository : 結果返却(Entity)
+
+Repository --> Service : Entityを返却
+deactivate Repository
+
+Service --> Controller : ビジネスロジック実行結果を返却(DTO)
+deactivate Service
+
+Controller -[#Red]-> Browser : <font color=red><b>HTTPレスポンス(レンダリング後のHTMLデータ)</b></font>
+deactivate Controller
+note over Controller #ffdddd
+<SSR側最大の特徴>
+WEBサーバー側でHTMLのレンダリング処理を実行してからブラウザへ返却する
+
+※Controllerは厳密にはView名をHandlerAdapter経由でDispatcherServletへ返却する
+※DispatcherServletがViewの実装クラスへレンダリング処理の要求を発行する
+end note
+
+Browser --> user : 画面全体を再描画して表示
+
+@enduml
