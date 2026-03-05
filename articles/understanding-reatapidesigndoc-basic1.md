@@ -3,7 +3,7 @@ title: "【C4モデル図解】API設計書の概要整理"
 emoji: "🌊"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [apidocument, restapi, spring, structurizr]
-published: false
+published: true
 ---
 
 ## はじめに
