@@ -12,7 +12,7 @@ skinparam sequenceArrowThickness 1.5
 ' ----------------------------
 '           タイトル           
 ' ----------------------------
-title "RESTAPI (分離構成) フロー図"
+title "REST (REpresentational State Transfer) フロー図"
 
 ' ----------------------------
 '       ライフライン定義       
