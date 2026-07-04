@@ -26,6 +26,7 @@ published: false
 XC7A35T-1CPG236C  
 
 * ボタン  
+
 | BTN  | Pin | BANK |
 | :-- | :-- | :-- |
 | BTNL | W19 | 14   |
@@ -35,6 +36,7 @@ XC7A35T-1CPG236C
 | BTNC | U18 | 14   |
 
 * LED  
+
 | LED | Pin | BANK |
 | :-- | :-- | :-- |
 | LD0 | U16 | 14 |
@@ -55,6 +57,7 @@ XC7A35T-1CPG236C
 | LD15 | L1 | 35 |
 
 * 電源  
+
 | BANK | 供給電圧 |
 | :-- | :-- |
 | 0    | 3.3V |
