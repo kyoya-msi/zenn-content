@@ -3,7 +3,7 @@ title: "【FPGA】Basys3が届いた！"
 emoji: "👻"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [fpga, basys3]
-published: false
+published: true
 ---
 ## はじめに
 こんにちは～kyoyaです～  
