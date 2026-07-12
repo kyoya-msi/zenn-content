@@ -1,9 +1,9 @@
 ---
-title: "【FPGA】LED点灯実験の応用①"
+title: "【FPGA】LED点灯実験応用①"
 emoji: "😸"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [fpga, vivado, verilog]
-published: false
+published: true
 ---
 ## はじめに
 こんにちは～kyoyaです～  
