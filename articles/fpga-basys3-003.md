@@ -77,9 +77,9 @@ module top (
 	wire	w_btnc_toggle_n ;
 
 	initial begin
-		r_btnc_d1		= 0 ;
-		r_btnc_d2		= 0 ;
-		r_btnc_toggle	= 0 ;
+		r_btnc_d1       = 0 ;
+		r_btnc_d2       = 0 ;
+		r_btnc_toggle   = 0 ;
 	end
 
 	assign w_edge = r_btnc_d1 & ~r_btnc_d2 ;
@@ -114,9 +114,9 @@ endmodule
 `timescale 1ns/100ps
 module top_tb ;
 
-	reg		r_clk ;
-	reg		r_btnc ;
-	wire	w_led7 ;
+	reg     r_clk ;
+	reg     r_btnc ;
+	wire    w_led7 ;
 
 	initial begin
 		r_clk = 0 ;
@@ -127,12 +127,12 @@ module top_tb ;
     end
 
 	initial begin
-		#0		r_btnc = 0 ;
-		#100	r_btnc = 1 ;
-		#100	r_btnc = 0 ;
-		#1000	r_btnc = 1 ;
-		#100	r_btnc = 0 ;
-		#100	$finish ;
+		#0          r_btnc = 0 ;
+		#100      r_btnc = 1 ;
+		#100      r_btnc = 0 ;
+		#1000     r_btnc = 1 ;
+		#100      r_btnc = 0 ;
+		#100      $finish ;
 	end
 
 	top top_inst(
