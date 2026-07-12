@@ -18,7 +18,7 @@ published: false
 > * 参考にさせていただいた動画  
 > [【【ゆっくり解説】Verilog Simulation篇【0から始めるFPGA超入門講座#2】】](https://www.youtube.com/watch?v=egiO6opQfcA)  
 
-## 内容
+## LED点灯実装
 ### ボタン極性
 #### 1. ボタン極性について
 
@@ -65,10 +65,10 @@ module top (
 	output	o_led7
 ) ;
 
-	wire	w_edge ;
-	reg		r_btnc_d1 ;
-	reg		r_btnc_d2 ;
-	reg		r_btnc_toggle ;
+	wire    w_edge ;
+	reg     r_btnc_d1 ;
+	reg     r_btnc_d2 ;
+	reg     r_btnc_toggle ;
 
 	wire	w_hold_term ;
 	wire	w_flip_term ;
