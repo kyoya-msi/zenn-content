@@ -3,7 +3,7 @@ title: "【FPGA】LED点灯実験応用③"
 emoji: "🐷"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: [fpga, vivado, verilog]
-published: false
+published: true
 ---
 
 ## はじめに
